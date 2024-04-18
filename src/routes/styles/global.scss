@@ -1,0 +1,139 @@
+/* src/styles/tailwind.css */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* static/fonts.css */
+
+/* League Spartan */
+@font-face {
+  font-family: "League Spartan";
+  font-weight: bold;
+  src: url("/fonts/League_Spartan/static/LeagueSpartan-Black.ttf")
+    format("truetype");
+}
+
+/* Libre Baskervile */
+@font-face {
+  font-family: "Libre Baskervile";
+  font-weight: normal;
+  src: url("/fonts/Libre_Baskerville/LibreBaskerville-Regular.ttf")
+    format("truetype");
+}
+
+/* Poppins */
+@font-face {
+  font-family: "Poppins Light";
+  font-weight: normal;
+  src: url("/fonts/Poppins/Poppins-Light.ttf") format("truetype");
+}
+
+:root {
+  --color-foreground: #22223b;
+  --color-outline: #4a4e69;
+  --color-highlight-1: #9a8c98;
+  --color-highlight-2: #c9ada7;
+  --color-background: #f2e9e4;
+
+  --font-title: "League Spartan", serif;
+  --font-subtitle: "Libre Baskervile", serif;
+  --font-paragraph: "Poppins Light", sans-serif;
+
+  --big-padding: 500px;
+}
+
+.body-container {
+  padding: var(--big-padding) 0;
+  color: var(--color-foreground);
+}
+
+.container {
+  padding: 0 clamp(10px, 10vw, 50px) 0;
+  width: 100%;
+  /* @apply px-20; */
+
+  &:not(:first-child) {
+    padding-top: var(--big-padding);
+  }
+}
+
+.hero-banner-video {
+  width: 100%;
+  min-height: 100vh;
+  max-height: max(1000px, 200vh);
+  object-fit: cover;
+  object-position: bottom;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.hero-container {
+  padding: var(--big-padding) clamp(10px, 10vw, 50px);
+}
+
+.bg {
+  background-color: var(--color-background);
+}
+
+.grid-video {
+  max-height: 700px;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-gap: 25px;
+}
+
+.contact-info {
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  display: grid;
+  grid-gap: 25px;
+  margin-top: 20px;
+
+  &__info {
+    display: grid;
+    grid-gap: 25px;
+  }
+}
+
+.scrolling-affected-element {
+  // transition: 1s;
+}
+
+h1 {
+  font-family: var(--font-title);
+  font-size: clamp(30px, 15vw, 130px);
+  color: var(--color-foreground);
+}
+
+h2 {
+  font-size: clamp(20px, 5vw, 24px);
+}
+
+h2,
+h3 {
+  font-family: var(--font-subtitle);
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 7px;
+  margin-bottom: 20px;
+  line-height: 2;
+}
+
+p {
+  font-family: var(--font-paragraph);
+  max-width: 450px;
+  padding-bottom: 10px;
+}
+
+footer {
+  padding: var(--big-padding) 100px;
+  background: var(--color-foreground);
+  color: var(--color-background);
+}

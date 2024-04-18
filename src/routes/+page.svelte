@@ -1,76 +1,182 @@
-<script>
-    export let name = "";
+<script lang="ts">
+  import playVideo from "./scripts/play-video";
+  import { setScrollingEffects } from "./scripts/scrolling-effects";
+
+  let heroBannerVideo: HTMLVideoElement;
+  let gridVideos: HTMLVideoElement[] = [];
+
+  import { onMount } from "svelte";
+
+  const changeOpacityOnScroll = (
+    target: HTMLElement,
+    ProximityToTargetBody: number
+  ) => {
+    target.style.opacity = String(ProximityToTargetBody ** 15);
+  };
+
+  const changePositionOnScroll = (
+    target: HTMLElement,
+    ProximityToTargetBody: number
+  ) => {
+    target.style.position = "relative";
+    const direction =
+      (([...(target.parentElement?.children || [])].indexOf(target) % 2) -
+        0.5) *
+      2;
+    target.style.left = `${(1 - ProximityToTargetBody) ** 2 * 1090 * direction}px`;
+  };
+
+  const changeSkewOnScroll = (
+    target: HTMLElement,
+    ProximityToTargetBody: number
+  ) => {
+    const direction =
+      (([...(target.parentElement?.children || [])].indexOf(target) % 2) -
+        0.5) *
+      2;
+    target.style.transform = `skew(${(1 - ProximityToTargetBody) ** 2 * 2000 * direction}deg)`;
+  };
+
+  const SA: HTMLElement[] = [];
+  const SB: HTMLElement[] = [];
+  const SC: HTMLElement[] = [];
+
+  onMount(() => {
+    setScrollingEffects(SA, [changeOpacityOnScroll, changePositionOnScroll]);
+    setScrollingEffects(SB, [changeOpacityOnScroll]);
+    setScrollingEffects(SC, [changeOpacityOnScroll, changeSkewOnScroll, changePositionOnScroll]);
+  });
 </script>
 
-<main>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<svelte:window
+  on:click={() => {
+    [...gridVideos, heroBannerVideo].forEach((video) => {
+      playVideo(video)();
+    });
+  }}
+/>
 
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+<main>
+  <!-- svelte-ignore a11y-media-has-caption -->
+  <video
+    loop
+    bind:this={heroBannerVideo}
+    class="hero-banner-video"
+    src="/videos/7946009-uhd_1440_2732_30fps.mp4"
+  ></video>
+
+  <div class="hero-container">
     <h1>
-        soft
-        <br>
-        smooth
-        <br>
-        & tasty
+      <div bind:this={SA[SA.length]}>soft</div>
+      <div bind:this={SA[SA.length]}>smooth</div>
+      <div bind:this={SA[SA.length]}>& tasty</div>
     </h1>
 
-    <h2>Libre Baskervile</h2>
+    <h2 bind:this={SB[SB.length]}>Libre Baskervile</h2>
+  </div>
 
-    <hr>
+  <div class="body-container bg">
+    <div class="container grid-2">
+      <div class="info">
+        <h3 bind:this={SA[SA.length]}>
+          Nihil ullam id explicabo aperiam voluptas
+        </h3>
+        <p bind:this={SB[SB.length]}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nostrum
+          eveniet similique nihil ullam id explicabo aperiam voluptas. A,
+          dolorum itaque minus deleniti facilis rerum suscipit fugiat distinctio
+          ipsam recusandae.
+        </p>
+      </div>
+      <!-- svelte-ignore a11y-media-has-caption -->
+      <div bind:this={SA[SA.length]}>
+        <video
+          loop
+          bind:this={gridVideos[0]}
+          class="grid-video"
+          src="/videos/5353260-hd_1080_1920_25fps.mp4"
+        ></video>
+      </div>
+    </div>
+    <div class="container grid-2">
+      <!-- svelte-ignore a11y-media-has-caption -->
+      <div bind:this={SA[SA.length]}>
+        <video
+          loop
+          bind:this={gridVideos[1]}
+          class="grid-video"
+          src="/videos/5353381-hd_1080_1920_25fps.mp4"
+        ></video>
+      </div>
+      <div class="info">
+        <h3 bind:this={SA[SA.length]}>Adipisicing elit earum!</h3>
+        <p bind:this={SB[SB.length]}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
+          corrupti nam placeat excepturi molestiae minus, autem cumque amet
+          repellendus quia, sint deleniti nostrum eligendi dolores,
+          necessitatibus soluta eum dicta aliquid.
+          <br /><br />
+          Soluta doloribus, numquam perspiciatis unde debitis vel eveniet reiciendis
+          autem reprehenderit quia est cumque? Sed veritatis velit impedit dolorem
+          aliquid unde ducimus atque tempore amet voluptas, modi labore magnam. Aut.
+        </p>
+      </div>
+    </div>
+    <div class="container grid-2">
+      <div class="info">
+        <h3 bind:this={SA[SA.length]}>Distinctio ipsam recusandae</h3>
+        <p bind:this={SB[SB.length]}>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium
+          possimus perspiciatis totam, laudantium officia doloremque eligendi
+          voluptate beatae deserunt dicta enim autem cum hic quod delectus
+          recusandae excepturi laborum nam?
+          <br /><br />
+          Sapiente totam porro architecto assumenda. Facere ducimus enim eum eaque
+          ipsa cupiditate, molestias quia qui praesentium dolorum iusto pariatur
+          vitae molestiae at quos, totam id ad nobis magnam. Similique, et!
+          <br /><br />
+          Quod temporibus reprehenderit sapiente eum ex, ut harum quia distinctio
+          similique sunt omnis, unde eius. Tempore debitis laborum natus alias, quo
+          laboriosam vero libero praesentium beatae rem reiciendis, repellat blanditiis.
+          <br><br>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero soluta in, dolores quam fugit temporibus! Quaerat fuga inventore dolore laudantium nostrum, consequatur, explicabo consectetur veritatis alias optio nemo animi tempora?
+          <br><br>
+          Culpa voluptatem ea quae doloribus, temporibus a fuga quo! Nisi neque numquam nulla suscipit architecto quod aliquam praesentium culpa minima tempora, odio qui eveniet delectus aperiam magnam quisquam! Accusantium, nemo.
+        </p>
+      </div>
+      <!-- svelte-ignore a11y-media-has-caption -->
+      <div bind:this={SA[SA.length]}>
+        <video
+          loop
+          bind:this={gridVideos[2]}
+          class="grid-video"
+          src="/videos/5353382-hd_1080_1920_25fps.mp4"
+        ></video>
+      </div>
+    </div>
+  </div>
 
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nostrum eveniet similique nihil ullam id explicabo aperiam voluptas. A, dolorum itaque minus deleniti facilis rerum suscipit fugiat distinctio ipsam recusandae.</p>
+  <footer>
+    <h3 bind:this={SC[SC.length]}>Contact us:</h3>
+    <hr />
+    <div class="contact-info">
+      <div class="contact-info__info">
+        <p bind:this={SC[SC.length]}>
+          <b>Email:</b> <a href="mailto:info@example.com">info@example.com</a>
+        </p>
+        <p bind:this={SC[SC.length]}><b>Phone:</b> +1 (123) 456-7890</p>
+      </div>
+      <div class="contact-info__info">
+        <p bind:this={SC[SC.length]}>
+          &copy; 2024 My Website. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
 </main>
 
-<style>
-    /* static/fonts.css */
-
-    /* League Spartan */
-    @font-face {
-        font-family: 'League Spartan';
-        font-weight: bold;
-        src: url('/fonts/League_Spartan/static/LeagueSpartan-Black.ttf') format('truetype');
-    }
-
-    /* Libre Baskervile */
-    @font-face {
-        font-family: 'Libre Baskervile';
-        font-weight: normal;
-        src: url('/fonts/Libre_Baskerville/LibreBaskerville-Regular.ttf') format('truetype');
-    }
-
-    /* Poppins */
-    @font-face {
-        font-family: 'Poppins Light';
-        font-weight: normal;
-        src: url('/fonts/Poppins/Poppins-Light.ttf') format('truetype');
-    }
-
-    :root {
-        --color-foreground: #22223b;
-        --color-outline: #4a4e69;
-        --color-highlight-1: #9a8c98;
-        --color-highlight-1: #c9ada7;
-        --color-background: #f2e9e4;
-
-        --font-title: 'League Spartan', serif;
-        --font-subtitle: 'Libre Baskervile', serif;
-        --font-paragraph: 'Poppins Light', sans-serif;
-    }
-
-    h1 {
-        font-family: var(--font-title);
-        font-size: clamp(30px, 40vw, 130px);
-    }
-
-    h2, h3, h4, h5 {
-        font-family: var(--font-subtitle);
-        font-weight: 100;
-        text-transform: uppercase;
-        font-size: 24px;
-        letter-spacing: 7px;
-    }
-
-    p {
-        font-family: var(--font-paragraph);
-        max-width: 450px;
-    }
+<style type="scss">
+  @import "./styles/reset.scss";
+  @import "./styles/global.scss";
 </style>
