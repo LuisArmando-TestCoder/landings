@@ -14,7 +14,7 @@ export function setScrollingEffects(
   });
   const trigger = () => {
     triggerScrollingEffect(scrollingEffectsMap, proximityCallbacks);
-  }
+  };
 
   trigger();
 

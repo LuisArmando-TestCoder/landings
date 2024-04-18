@@ -6,36 +6,11 @@
   let gridVideos: HTMLVideoElement[] = [];
 
   import { onMount } from "svelte";
-
-  const changeOpacityOnScroll = (
-    target: HTMLElement,
-    ProximityToTargetBody: number
-  ) => {
-    target.style.opacity = String(ProximityToTargetBody ** 15);
-  };
-
-  const changePositionOnScroll = (
-    target: HTMLElement,
-    ProximityToTargetBody: number
-  ) => {
-    target.style.position = "relative";
-    const direction =
-      (([...(target.parentElement?.children || [])].indexOf(target) % 2) -
-        0.5) *
-      2;
-    target.style.left = `${(1 - ProximityToTargetBody) ** 2 * 1090 * direction}px`;
-  };
-
-  const changeSkewOnScroll = (
-    target: HTMLElement,
-    ProximityToTargetBody: number
-  ) => {
-    const direction =
-      (([...(target.parentElement?.children || [])].indexOf(target) % 2) -
-        0.5) *
-      2;
-    target.style.transform = `skew(${(1 - ProximityToTargetBody) ** 2 * 2000 * direction}deg)`;
-  };
+  import {
+    changeOpacityOnScroll,
+    changePositionOnScroll,
+    changeSkewOnScroll,
+  } from "./scripts/scrolling-effects/effects";
 
   const SA: HTMLElement[] = [];
   const SB: HTMLElement[] = [];
@@ -44,7 +19,11 @@
   onMount(() => {
     setScrollingEffects(SA, [changeOpacityOnScroll, changePositionOnScroll]);
     setScrollingEffects(SB, [changeOpacityOnScroll]);
-    setScrollingEffects(SC, [changeOpacityOnScroll, changeSkewOnScroll, changePositionOnScroll]);
+    setScrollingEffects(SC, [
+      changeOpacityOnScroll,
+      changeSkewOnScroll,
+      changePositionOnScroll,
+    ]);
   });
 </script>
 
@@ -139,10 +118,15 @@
           Quod temporibus reprehenderit sapiente eum ex, ut harum quia distinctio
           similique sunt omnis, unde eius. Tempore debitis laborum natus alias, quo
           laboriosam vero libero praesentium beatae rem reiciendis, repellat blanditiis.
-          <br><br>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero soluta in, dolores quam fugit temporibus! Quaerat fuga inventore dolore laudantium nostrum, consequatur, explicabo consectetur veritatis alias optio nemo animi tempora?
-          <br><br>
-          Culpa voluptatem ea quae doloribus, temporibus a fuga quo! Nisi neque numquam nulla suscipit architecto quod aliquam praesentium culpa minima tempora, odio qui eveniet delectus aperiam magnam quisquam! Accusantium, nemo.
+          <br /><br />
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero soluta in,
+          dolores quam fugit temporibus! Quaerat fuga inventore dolore laudantium
+          nostrum, consequatur, explicabo consectetur veritatis alias optio nemo
+          animi tempora?
+          <br /><br />
+          Culpa voluptatem ea quae doloribus, temporibus a fuga quo! Nisi neque numquam
+          nulla suscipit architecto quod aliquam praesentium culpa minima tempora,
+          odio qui eveniet delectus aperiam magnam quisquam! Accusantium, nemo.
         </p>
       </div>
       <!-- svelte-ignore a11y-media-has-caption -->
