@@ -1,0 +1,118 @@
+:global(:root) {
+  --menu-width: min(100vw, 700rem);
+  --squish-transition: 1s;
+}
+
+input[type="checkbox"].ham-trigger {
+  --ham-size: 50rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: auto;
+  background: transparent;
+  border: 0;
+  width: calc(var(--ham-size) + var(--ham-size) * 0.275);
+  height: calc(var(--ham-size) + var(--ham-size) * 0.1);
+  outline: none;
+  mix-blend-mode: exclusion;
+
+  position: fixed;
+  top: 25rem;
+  right: 25rem;
+  z-index: 2;
+
+  &:after,
+  &:before {
+    content: "";
+    width: var(--ham-size);
+    height: calc(var(--ham-size) * 0.05);
+    background: var(--color-foreground);
+    display: block;
+    position: absolute;
+    transition: 0.3s;
+    border-radius: 50rem;
+  }
+
+  &:after {
+    top: calc(var(--ham-size) * 0.4);
+  }
+
+  &:before {
+    top: calc(var(--ham-size) * 0.6);
+  }
+
+  &:checked {
+    cursor: pointer;
+
+    &:before {
+      transform: rotate(-45deg);
+    }
+
+    &:after {
+      transform: rotate(45deg);
+    }
+
+    &:after,
+    &:before {
+      top: calc(var(--ham-size) * 0.5);
+    }
+  }
+
+  &:active {
+    cursor: pointer;
+
+    &:after,
+    &:before {
+      transform: rotate(0deg);
+    }
+  }
+}
+
+.menu {
+  border-left: 1rem solid var(--color-highlight-2);
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: var(--color-background);
+  height: 100vh;
+  width: var(--menu-width);
+  display: flex;
+  justify-content: center;
+  place-items: center;
+  transition: var(--squish-transition);
+
+  &__list {
+    width: 100%;
+  }
+  
+  &__list-item {
+    width: 100%;
+  }
+  
+  &__anchor {
+    width: 100%;
+    padding: 10rem 0;
+    text-align: center;
+    transition: .2s;
+    display: flex;
+    justify-content: center;
+    place-items: center;
+
+    &:hover {
+      background: var(--color-background-highlight);
+    }
+  }
+}
+
+.hide-on-menu-open {
+  right: calc(-1 * var(--menu-width));
+}
+
+.squishable {
+  transition: var(--squish-transition);
+}
+
+.squish-on-open-menu {
+  width: calc(100vw -  var(--menu-width));
+}

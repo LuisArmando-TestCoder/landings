@@ -1,14 +1,19 @@
 <script lang="ts">
+  // .
+
+  let loadingScreen: HTMLElement;
+
   import playVideo from "./scripts/play-video";
   import { setScrollingEffects } from "./scripts/scrolling-effects";
 
+  // .
+
   let heroBannerVideo: HTMLVideoElement;
   let gridVideos: HTMLVideoElement[] = [];
-  let loadingScreen: HTMLElement;
 
   import { onMount } from "svelte";
   import {
-  changeHeightOnScroll,
+    changeHeightOnScroll,
     changeOpacityOnScroll,
     changePositionOnScroll,
     changeSkewOnScroll,
@@ -30,10 +35,46 @@
       changeSkewOnScroll,
       changePositionOnScroll,
     ]);
-    setScrollingEffects(gridVideos, [
-      changeHeightOnScroll,
-    ]);
+    setScrollingEffects(gridVideos, [changeHeightOnScroll]);
   }
+
+  // .
+
+  // onMount(() => {
+  //   // Add this function to your code
+  //   function addScrollAcceleration() {
+  //     let lastScrollPosition = 0;
+  //     let peakAcceleration = 20;
+  //     let accelerationFactor = peakAcceleration; // Adjust this value to control the acceleration
+
+  //     // Calculate the scroll direction
+  //     let scrollDirection = 0;
+
+  //     function handleScroll() {
+  //       // Apply acceleration
+
+  //       accelerationFactor = Math.round((accelerationFactor / 2) * 1000) / 1000;
+
+  //       if (accelerationFactor)
+  //         window.scrollY =
+  //           window.scrollY + scrollDirection * accelerationFactor;
+  //     }
+
+  //     // Attach the scroll event listener
+  //     window.addEventListener("scroll", handleScroll);
+  //     window.addEventListener("scrollend", () => {
+  //       accelerationFactor = peakAcceleration;
+  //       scrollDirection = Math.sign(lastScrollPosition - window.scrollY);
+  //       lastScrollPosition = window.scrollY;
+  //       console.log("scrollDirection", scrollDirection);
+  //     });
+  //   }
+
+  //   // Call the function to enable scroll acceleration
+  //   addScrollAcceleration();
+  // });
+
+  let isMenuOpen: boolean;
 </script>
 
 <svelte:window
@@ -42,13 +83,29 @@
       playVideo(video)();
     });
   }}
-/>
+/> 
 
-<div bind:this={loadingScreen} class="loading-screen show">
-</div>
+<div bind:this={loadingScreen} class="loading-screen show"></div>
+
+<input bind:checked={isMenuOpen} class="ham-trigger" type="checkbox" />
+
+<nav class="menu {isMenuOpen ? "" : "hide-on-menu-open"}">
+  <ul class="menu__list">
+    <li class="menu__list-item">
+      <a class="menu__anchor" href="/"><p>Home</p></a>
+    </li>
+    <li class="menu__list-item">
+      <a class="menu__anchor" href="#"><p>About</p></a>
+    </li>
+    <li class="menu__list-item">
+      <a class="menu__anchor" href="#"><p>Services</p></a>
+    </li>
+    <!-- Add more menu items as needed -->
+  </ul>
+</nav>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-<main>
+<main class="squishable {isMenuOpen ? "squish-on-open-menu" : ""}">
   <!-- svelte-ignore a11y-media-has-caption -->
   <video
     loop
@@ -175,4 +232,5 @@
 <style type="scss">
   @import "./styles/reset.scss";
   @import "./styles/global.scss";
+  @import "./styles/menu.scss";
 </style>
