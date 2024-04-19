@@ -43,7 +43,7 @@ function triggerScrollingEffect(
       (Math.max(scrollCenterPosition, elementBottomAbsolutePosition) /
         elementBottomAbsolutePosition);
 
-    console.table([["bodyProximityToCenter", bodyProximityToCenter]]);
+    // console.table([["bodyProximityToCenter", bodyProximityToCenter]]);
 
     proximityCallbacks.forEach((proximityCallback) => {
       proximityCallback(element, bodyProximityToCenter);

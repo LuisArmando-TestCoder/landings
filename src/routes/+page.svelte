@@ -4,9 +4,11 @@
 
   let heroBannerVideo: HTMLVideoElement;
   let gridVideos: HTMLVideoElement[] = [];
+  let loadingScreen: HTMLElement;
 
   import { onMount } from "svelte";
   import {
+  changeHeightOnScroll,
     changeOpacityOnScroll,
     changePositionOnScroll,
     changeSkewOnScroll,
@@ -17,6 +19,10 @@
   const SC: HTMLElement[] = [];
 
   onMount(() => {
+    setEffects();
+  });
+
+  function setEffects() {
     setScrollingEffects(SA, [changeOpacityOnScroll, changePositionOnScroll]);
     setScrollingEffects(SB, [changeOpacityOnScroll]);
     setScrollingEffects(SC, [
@@ -24,7 +30,10 @@
       changeSkewOnScroll,
       changePositionOnScroll,
     ]);
-  });
+    setScrollingEffects(gridVideos, [
+      changeHeightOnScroll,
+    ]);
+  }
 </script>
 
 <svelte:window
@@ -34,6 +43,9 @@
     });
   }}
 />
+
+<div bind:this={loadingScreen} class="loading-screen show">
+</div>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <main>
@@ -69,7 +81,7 @@
         </p>
       </div>
       <!-- svelte-ignore a11y-media-has-caption -->
-      <div bind:this={SA[SA.length]}>
+      <div bind:this={SA[SA.length]} class="video-container">
         <video
           loop
           bind:this={gridVideos[0]}
@@ -80,7 +92,7 @@
     </div>
     <div class="container grid-2">
       <!-- svelte-ignore a11y-media-has-caption -->
-      <div bind:this={SA[SA.length]}>
+      <div bind:this={SA[SA.length]} class="video-container">
         <video
           loop
           bind:this={gridVideos[1]}
@@ -130,7 +142,7 @@
         </p>
       </div>
       <!-- svelte-ignore a11y-media-has-caption -->
-      <div bind:this={SA[SA.length]}>
+      <div bind:this={SA[SA.length]} class="video-container">
         <video
           loop
           bind:this={gridVideos[2]}

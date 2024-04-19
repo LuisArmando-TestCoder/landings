@@ -29,3 +29,12 @@ export const changeSkewOnScroll = (
     (1 - ProximityToTargetBody) ** 2 * 2000 * direction
   }deg)`;
 };
+
+export const changeHeightOnScroll = (
+    target: HTMLElement,
+    ProximityToTargetBody: number
+  ) => {
+    target.style.height = `${
+      ProximityToTargetBody ** 4 * 700
+    }px`;
+  };
