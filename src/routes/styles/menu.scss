@@ -69,7 +69,7 @@ input[type="checkbox"].ham-trigger {
 }
 
 .menu {
-  border-left: 1rem solid var(--color-highlight-2);
+  border-left: 1rem solid var(--color-highlight-1);
   z-index: 1;
   position: fixed;
   top: 0;
@@ -80,7 +80,7 @@ input[type="checkbox"].ham-trigger {
   display: flex;
   justify-content: center;
   place-items: center;
-  transition: var(--squish-transition);
+  // transition: var(--squish-transition);
 
   &__list {
     width: 100%;
@@ -110,7 +110,7 @@ input[type="checkbox"].ham-trigger {
 }
 
 .squishable {
-  transition: var(--squish-transition);
+  // transition: var(--squish-transition);
 }
 
 .squish-on-open-menu {

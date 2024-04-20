@@ -1,4 +1,8 @@
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+* {
+  box-sizing: border-box;
+}
+
 :global(html) {
   font-size: 1px; /* Set the base font size to 10rem */
   line-height: 1.15;

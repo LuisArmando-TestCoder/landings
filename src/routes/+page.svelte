@@ -75,42 +75,94 @@
   // });
 
   let isMenuOpen: boolean;
+
+  let progressValueElement: HTMLElement;
+  let progressBarElement: HTMLElement;
+  let progressValue = 1;
+  let hasLoadingHadInteraction: boolean;
+
+  onMount(() => {
+    hasLoadingHadInteraction = false;
+
+    (function frame() {
+      progressBarElement.style.width = `${progressValue}%`;
+      console.log(progressValue);
+
+      if ((progressValue += 1.5) > 100) return;
+
+      requestAnimationFrame(frame);
+    })();
+  });
 </script>
 
 <svelte:window
-  on:click={() => {
+  on:mouseover={() => {
     [...gridVideos, heroBannerVideo].forEach((video) => {
       playVideo(video)();
     });
   }}
-/> 
+/>
 
-<div bind:this={loadingScreen} class="loading-screen show"></div>
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div
+  bind:this={loadingScreen}
+  on:click={() => {
+    console.log("click!");
+    hasLoadingHadInteraction = true;
+  }}
+  on:keydown={() => {
+    console.log("key down!");
+    hasLoadingHadInteraction = true;
+  }}
+  aria-pressed={hasLoadingHadInteraction}
+  class="loading-screen {progressValue >= 100 && hasLoadingHadInteraction
+    ? 'open'
+    : 'closed'}"
+>
+  <p>loading</p>
+  <br />
+  <div
+    bind:this={progressBarElement}
+    class="loading-screen__progress-bar-wrapper"
+  >
+    <hr
+      class="loading-screen__progress-bar {progressValue >= 100 && 'pulse'}"
+    />
+  </div>
+  <br />
+  <h2 bind:this={progressValueElement} class="loading-screen__progress">
+    {Math.floor(progressValue - 1)}%
+  </h2>
+</div>
 
 <input bind:checked={isMenuOpen} class="ham-trigger" type="checkbox" />
 
-<nav class="menu {isMenuOpen ? "" : "hide-on-menu-open"}">
+<nav class="menu {isMenuOpen ? '' : 'hide-on-menu-open'}">
   <ul class="menu__list">
     <li class="menu__list-item">
       <a class="menu__anchor" href="/"><p>Home</p></a>
     </li>
     <li class="menu__list-item">
-      <a class="menu__anchor" href="#"><p>About</p></a>
+      <a class="menu__anchor" href="#about"><p>About</p></a>
     </li>
     <li class="menu__list-item">
-      <a class="menu__anchor" href="#"><p>Services</p></a>
+      <a class="menu__anchor" href="#contact"><p>Services</p></a>
     </li>
     <!-- Add more menu items as needed -->
   </ul>
 </nav>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-<main class="squishable {isMenuOpen ? "squish-on-open-menu" : ""}">
+<main
+  class="visible-when-ready squishable {progressValue >= 100 &&
+    hasLoadingHadInteraction &&
+    'show'} {isMenuOpen && 'squish-on-open-menu'}"
+>
   <!-- svelte-ignore a11y-media-has-caption -->
   <video
     loop
     bind:this={heroBannerVideo}
-    class="hero-banner-video"
+    class="hero-banner-video {isMenuOpen ? 'squish-on-open-menu' : ''}"
     src="/videos/7946009-uhd_1440_2732_30fps.mp4"
   ></video>
 
@@ -124,7 +176,7 @@
     <h2 bind:this={SB[SB.length]}>Libre Baskervile</h2>
   </div>
 
-  <div class="body-container bg">
+  <div class="body-container bg" id="about">
     <div class="container grid-2">
       <div class="info">
         <h3 bind:this={SA[SA.length]}>
@@ -210,7 +262,7 @@
     </div>
   </div>
 
-  <footer>
+  <footer id="contact">
     <h3 bind:this={SC[SC.length]}>Contact us:</h3>
     <hr />
     <div class="contact-info">
@@ -233,4 +285,5 @@
   @import "./styles/reset.scss";
   @import "./styles/global.scss";
   @import "./styles/menu.scss";
+  @import "./styles/loading-screen.scss";
 </style>
