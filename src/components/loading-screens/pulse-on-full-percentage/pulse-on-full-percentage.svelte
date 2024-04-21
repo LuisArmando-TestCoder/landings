@@ -37,7 +37,9 @@
     ? 'open'
     : 'closed'}"
 >
-  <p>loading</p>
+  <p>{progressValue >= 100
+    ? 'Press anywhere'
+    : 'loading'}</p>
   <br />
   <div
     bind:this={progressBarElement}
