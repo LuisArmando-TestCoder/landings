@@ -1,8 +1,13 @@
 <script lang="ts">
-    export let isMenuOpen: boolean = false;
+    type OnChangeCallback = (isChecked: boolean) => void;
+
+    export let onChange: OnChangeCallback;
+    let inputElement: HTMLInputElement;
 </script>
 
-<input bind:checked={isMenuOpen} class="two-line-to-x-ham-trigger" type="checkbox" />
+<input bind:this={inputElement} on:change={() => {
+    onChange(inputElement.checked);
+}} class="two-line-to-x-ham-trigger" type="checkbox" />
 
 <style lang="scss">
     @import "./two-line-to-x.scss";

@@ -1,7 +1,7 @@
 <script lang="ts">
   // .
 
-  import LoadingScreen from "../components/loading-screens/pulse-on-full-percentage/pulse-on-full-percentage.svelte"
+  import LoadingScreen from "../components/loading-screens/pulse-on-full-percentage/pulse-on-full-percentage.svelte";
   import playVideo from "./scripts/play-video";
   import { setScrollingEffects } from "./scripts/scrolling-effects";
 
@@ -79,7 +79,6 @@
 
   let progressValue: number;
   let hasLoadingHadInteraction: boolean;
-
 </script>
 
 <svelte:window
@@ -90,12 +89,15 @@
   }}
 />
 
+<TwoLineToX
+  onChange={(value) => {
+    isMenuOpen = value;
+  }}
+/>
 
-<TwoLineToX isMenuOpen={isMenuOpen}/>
+<MinimalMenu {isMenuOpen} />
 
-<MinimalMenu isMenuOpen={isMenuOpen}/>
-
-<LoadingScreen progressValue={progressValue} hasLoadingHadInteraction={hasLoadingHadInteraction}/>
+<LoadingScreen {progressValue} {hasLoadingHadInteraction} />
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <main
