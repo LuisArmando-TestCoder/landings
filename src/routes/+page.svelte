@@ -46,7 +46,7 @@
     let currentV: number;
     let scrollDirection: number = 0;
 
-    let peakAcceleration = 50; // other than 0
+    let peakAcceleration = 100; // other than 0
     // Adjust this value to control the acceleration
     let accelerationFactor = 0;
 
@@ -74,8 +74,8 @@
 
       scrollDirection = Math.sign(currentV - oldV);
 
-      const decimalToZeroScaleSnap = 1e2;
-      accelerationFactor = Math.floor((accelerationFactor / 1.05) * decimalToZeroScaleSnap) / decimalToZeroScaleSnap;
+      const decimalToZeroScaleSnap = 70;
+      accelerationFactor = Math.floor((accelerationFactor / 1.03) * decimalToZeroScaleSnap) / decimalToZeroScaleSnap;
 
       window.scrollTo(0, currentV + accelerationFactor * scrollDirection);
 
