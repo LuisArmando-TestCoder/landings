@@ -134,10 +134,6 @@
   background: var(--color-highlight-1); 
 }
 
-:global(*) {
-  scroll-behavior: smooth;
-}
-
 .hero-container h1 {
   font-family: var(--font-title);
   font-size: clamp(30rem, 15vw, 130rem);

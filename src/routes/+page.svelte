@@ -41,39 +41,47 @@
 
   // .
 
-  // onMount(() => {
-  //   // Add this function to your code
-  //   function addScrollAcceleration() {
-  //     let lastScrollPosition = 0;
-  //     let peakAcceleration = 20;
-  //     let accelerationFactor = peakAcceleration; // Adjust this value to control the acceleration
+  onMount(() => {
+    let oldV: number = window.scrollY;
+    let currentV: number;
+    let scrollDirection: number = 0;
 
-  //     // Calculate the scroll direction
-  //     let scrollDirection = 0;
+    let peakAcceleration = 50; // other than 0
+    // Adjust this value to control the acceleration
+    let accelerationFactor = 0;
 
-  //     function handleScroll() {
-  //       // Apply acceleration
+    (function frame() {
+      currentV = window.scrollY;
+      // console.log("accelerationFactor", accelerationFactor);
 
-  //       accelerationFactor = Math.round((accelerationFactor / 2) * 1000) / 1000;
+      if (accelerationFactor === 0) {
+        if (oldV - currentV) {
+          oldV = currentV;
 
-  //       if (accelerationFactor)
-  //         window.scrollY =
-  //           window.scrollY + scrollDirection * accelerationFactor;
-  //     }
+          // console.log("oldV - currentV", oldV - currentV);
 
-  //     // Attach the scroll event listener
-  //     window.addEventListener("scroll", handleScroll);
-  //     window.addEventListener("scrollend", () => {
-  //       accelerationFactor = peakAcceleration;
-  //       scrollDirection = Math.sign(lastScrollPosition - window.scrollY);
-  //       lastScrollPosition = window.scrollY;
-  //       console.log("scrollDirection", scrollDirection);
-  //     });
-  //   }
+          requestAnimationFrame(frame);
 
-  //   // Call the function to enable scroll acceleration
-  //   addScrollAcceleration();
-  // });
+          return;
+        }
+
+        accelerationFactor = peakAcceleration;
+
+        requestAnimationFrame(frame);
+
+        return;
+      }
+
+      scrollDirection = Math.sign(currentV - oldV);
+
+      const decimalToZeroScaleSnap = 1e2;
+      accelerationFactor = Math.floor((accelerationFactor / 1.05) * decimalToZeroScaleSnap) / decimalToZeroScaleSnap;
+
+      window.scrollTo(0, currentV + accelerationFactor * scrollDirection);
+
+      requestAnimationFrame(frame);
+    })();
+  });
 
   let isMenuOpen = false;
 
